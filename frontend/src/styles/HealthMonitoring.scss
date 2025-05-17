@@ -1,0 +1,100 @@
+/* 健康数据监测页面样式 */
+
+.health-monitoring {
+  .page-description {
+    font-size: 18px;
+    margin-bottom: 24px;
+    display: block;
+  }
+  
+  .health-monitoring-tabs {
+    margin-top: 24px;
+    
+    .ant-tabs-tab {
+      font-size: 16px;
+      padding: 12px 20px;
+    }
+  }
+  
+  .data-entry-card {
+    margin-bottom: 24px;
+    
+    .ant-form-item-label > label {
+      font-size: 16px;
+    }
+    
+    .ant-input-affix-wrapper {
+      font-size: 16px;
+      padding: 8px 12px;
+    }
+  }
+  
+  .trend-chart-card {
+    margin-bottom: 24px;
+  }
+  
+  .data-table-card {
+    margin-bottom: 24px;
+    
+    .ant-table {
+      font-size: 16px;
+    }
+    
+    .ant-table-thead > tr > th {
+      font-weight: bold;
+      background-color: #f0f2f5;
+    }
+  }
+  
+  .coming-soon {
+    text-align: center;
+    padding: 60px 0;
+    
+    h3 {
+      margin-bottom: 20px;
+    }
+  }
+  
+  // 老年人友好的设计 - 增加控件尺寸
+  .ant-select {
+    font-size: 16px;
+    
+    .ant-select-selector {
+      padding: 8px 12px !important;
+      height: auto !important;
+    }
+    
+    .ant-select-selection-item {
+      line-height: normal !important;
+    }
+  }
+  
+  .ant-picker {
+    padding: 8px 12px;
+    
+    input {
+      font-size: 16px;
+    }
+  }
+  
+  .ant-btn {
+    font-size: 16px;
+    height: auto;
+    padding: 8px 16px;
+  }
+  
+  // 响应式设计
+  @media (max-width: 768px) {
+    .ant-tabs-tab {
+      padding: 16px 24px;
+    }
+    
+    .ant-form-item-label > label,
+    .ant-input-affix-wrapper,
+    .ant-select,
+    .ant-picker input,
+    .ant-btn {
+      font-size: 18px;
+    }
+  }
+} 
