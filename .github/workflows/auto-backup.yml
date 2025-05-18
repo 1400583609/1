@@ -1,0 +1,26 @@
+name: Daily Code Backup
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # 每天午夜运行
+  workflow_dispatch:     # 允许手动触发
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        
+      - name: Configure Git
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          
+      - name: Commit and push if there are changes
+        run: |
+          git add .
+          CURRENT_DATE=$(date +"%Y-%m-%d")
+          git commit -m "自动备份 $CURRENT_DATE" || echo "没有需要提交的变更"
+          git push 
