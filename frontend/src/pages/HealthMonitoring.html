@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>健康数据监测与管理 - 动维康</title>
+  <link rel="stylesheet" href="../styles/index.css">
+  <style>
+    .data-dashboard {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    
+    .data-card {
+      background-color: var(--white);
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      padding: 20px;
+    }
+    
+    .data-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    
+    .data-card-title {
+      font-size: 1.2rem;
+      color: var(--primary-color);
+    }
+    
+    .data-value {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    
+    .data-status {
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      margin-bottom: 15px;
+    }
+    
+    .status-normal {
+      background-color: #e8f5e9;
+      color: #2e7d32;
+    }
+    
+    .status-warning {
+      background-color: #fff3e0;
+      color: #ef6c00;
+    }
+    
+    .status-alert {
+      background-color: #ffebee;
+      color: #c62828;
+    }
+    
+    .chart-container {
+      height: 250px;
+      margin-top: 15px;
+    }
+    
+    .data-history {
+      background-color: var(--white);
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      padding: 20px;
+      margin-bottom: 30px;
+    }
+    
+    .filter-controls {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    
+    .filter-control {
+      padding: 8px 15px;
+      border: 1px solid #ddd;
+      border-radius: var(--border-radius);
+    }
+    
+    .history-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    .history-table th,
+    .history-table td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .history-table th {
+      background-color: #f5f5f5;
+      font-weight: 600;
+    }
+    
+    .add-data-btn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background-color: var(--primary-color);
+      color: var(--white);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 2rem;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+  </style>
+</head>
+<body>
+  <!-- 页头 -->
+  <header class="header">
+    <div class="container navbar">
+      <div class="logo">
+        <img src="../assets/logo.png" alt="动维康">
+      </div>
+      <nav class="nav-links">
+        <a href="HomePage.html">首页</a>
+        <a href="#">产品中心</a>
+        <a href="#">解决方案</a>
+        <a href="#">长护险</a>
+        <a href="#">典型案例</a>
+        <a href="#">新闻动态</a>
+        <a href="#">资料下载</a>
+        <a href="#">关于我们</a>
+        <a href="#" class="btn btn-primary">免费试用</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- 主要内容 -->
+  <main>
+    <section class="blue-section">
+      <div class="container">
+        <h1>健康数据监测与管理</h1>
+        <p>全面记录健康数据，科学分析健康状态，为您提供专业指导</p>
+      </div>
+    </section>
+
+    <section class="container" style="padding: 40px 0;">
+      <h2>健康数据概览</h2>
+      <p>根据您最近的健康测量数据，我们为您提供以下健康状态分析</p>
+      
+      <div class="data-dashboard">
+        <div class="data-card">
+          <div class="data-card-header">
+            <h3 class="data-card-title">血压 (mmHg)</h3>
+            <span>更新于今天 08:30</span>
+          </div>
+          <div class="data-value">125/78</div>
+          <span class="data-status status-normal">正常范围</span>
+          <p>您的血压处于理想范围内，请继续保持良好的生活习惯。</p>
+          <div class="chart-container">
+            <!-- 这里会放置血压图表 -->
+            <img src="../assets/chart-bp.png" alt="血压趋势图" style="width: 100%; height: 100%; object-fit: cover;">
+          </div>
+        </div>
+        
+        <div class="data-card">
+          <div class="data-card-header">
+            <h3 class="data-card-title">血糖 (mmol/L)</h3>
+            <span>更新于今天 07:15</span>
+          </div>
+          <div class="data-value">6.2</div>
+          <span class="data-status status-warning">偏高</span>
+          <p>您的空腹血糖略高于正常范围，建议控制碳水摄入量。</p>
+          <div class="chart-container">
+            <!-- 这里会放置血糖图表 -->
+            <img src="../assets/chart-glucose.png" alt="血糖趋势图" style="width: 100%; height: 100%; object-fit: cover;">
+          </div>
+        </div>
+        
+        <div class="data-card">
+          <div class="data-card-header">
+            <h3 class="data-card-title">心率 (bpm)</h3>
+            <span>更新于今天 09:45</span>
+          </div>
+          <div class="data-value">72</div>
+          <span class="data-status status-normal">正常范围</span>
+          <p>您的静息心率处于健康范围，表明心脏功能良好。</p>
+          <div class="chart-container">
+            <!-- 这里会放置心率图表 -->
+            <img src="../assets/chart-heart.png" alt="心率趋势图" style="width: 100%; height: 100%; object-fit: cover;">
+          </div>
+        </div>
+        
+        <div class="data-card">
+          <div class="data-card-header">
+            <h3 class="data-card-title">体重 (kg)</h3>
+            <span>更新于昨天 20:10</span>
+          </div>
+          <div class="data-value">68.5</div>
+          <span class="data-status status-normal">正常范围</span>
+          <p>您的体重指数 (BMI) 为 23.8，处于健康体重范围。</p>
+          <div class="chart-container">
+            <!-- 这里会放置体重图表 -->
+            <img src="../assets/chart-weight.png" alt="体重趋势图" style="width: 100%; height: 100%; object-fit: cover;">
+          </div>
+        </div>
+      </div>
+      
+      <div class="data-history">
+        <h2>历史数据记录</h2>
+        <div class="filter-controls">
+          <select class="filter-control">
+            <option value="all">所有数据类型</option>
+            <option value="bloodPressure">血压</option>
+            <option value="glucose">血糖</option>
+            <option value="heartRate">心率</option>
+            <option value="weight">体重</option>
+            <option value="sleep">睡眠</option>
+            <option value="exercise">运动量</option>
+          </select>
+          
+          <select class="filter-control">
+            <option value="7days">最近7天</option>
+            <option value="30days">最近30天</option>
+            <option value="90days">最近3个月</option>
+            <option value="custom">自定义时间段</option>
+          </select>
+          
+          <button class="btn btn-primary">查询</button>
+        </div>
+        
+        <table class="history-table">
+          <thead>
+            <tr>
+              <th>测量时间</th>
+              <th>数据类型</th>
+              <th>测量值</th>
+              <th>状态</th>
+              <th>备注</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>2023-08-10 08:30</td>
+              <td>血压</td>
+              <td>125/78 mmHg</td>
+              <td><span class="data-status status-normal">正常</span></td>
+              <td>晨起测量</td>
+            </tr>
+            <tr>
+              <td>2023-08-10 07:15</td>
+              <td>血糖</td>
+              <td>6.2 mmol/L</td>
+              <td><span class="data-status status-warning">偏高</span></td>
+              <td>空腹</td>
+            </tr>
+            <tr>
+              <td>2023-08-10 09:45</td>
+              <td>心率</td>
+              <td>72 bpm</td>
+              <td><span class="data-status status-normal">正常</span></td>
+              <td>静息</td>
+            </tr>
+            <tr>
+              <td>2023-08-09 20:10</td>
+              <td>体重</td>
+              <td>68.5 kg</td>
+              <td><span class="data-status status-normal">正常</span></td>
+              <td>晚饭后</td>
+            </tr>
+            <tr>
+              <td>2023-08-09 06:30</td>
+              <td>睡眠</td>
+              <td>7.5 小时</td>
+              <td><span class="data-status status-normal">正常</span></td>
+              <td>睡眠质量良好</td>
+            </tr>
+            <tr>
+              <td>2023-08-08 17:00</td>
+              <td>运动量</td>
+              <td>30 分钟</td>
+              <td><span class="data-status status-normal">正常</span></td>
+              <td>散步</td>
+            </tr>
+            <tr>
+              <td>2023-08-08 08:15</td>
+              <td>血压</td>
+              <td>130/85 mmHg</td>
+              <td><span class="data-status status-warning">偏高</span></td>
+              <td>晨起测量</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+    
+    <section class="blue-section">
+      <div class="container">
+        <h2>健康评估报告</h2>
+        <p>根据您的历史数据，我们为您生成了专业的健康评估报告</p>
+        <a href="#" class="btn btn-secondary">查看完整报告</a>
+      </div>
+    </section>
+    
+    <!-- 添加数据按钮 -->
+    <a href="#" class="add-data-btn">+</a>
+  </main>
+
+  <!-- 页脚 -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <div class="footer-links">
+        <h4>产品中心</h4>
+        <ul>
+          <li><a href="#">CCRC养老运营管理系统</a></li>
+          <li><a href="#">机构养老运营管理系统</a></li>
+          <li><a href="#">社区居家养老管理系统</a></li>
+          <li><a href="#">民政智慧养老平台</a></li>
+          <li><a href="#">健康数据监测与管理</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>解决方案</h4>
+        <ul>
+          <li><a href="#">机构养老解决方案</a></li>
+          <li><a href="#">居家养老解决方案</a></li>
+          <li><a href="#">社区养老解决方案</a></li>
+          <li><a href="#">医养结合解决方案</a></li>
+          <li><a href="#">农村养老解决方案</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>关于我们</h4>
+        <ul>
+          <li><a href="#">公司介绍</a></li>
+          <li><a href="#">企业文化</a></li>
+          <li><a href="#">发展历程</a></li>
+          <li><a href="#">合作伙伴</a></li>
+          <li><a href="#">联系我们</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>新闻资讯</h4>
+        <ul>
+          <li><a href="#">公司新闻</a></li>
+          <li><a href="#">行业资讯</a></li>
+          <li><a href="#">政策法规</a></li>
+          <li><a href="#">常见问题</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>联系我们</h4>
+        <ul>
+          <li>电话：0571-87899385</li>
+          <li>邮箱：info@example.com</li>
+          <li>地址：浙江省杭州市西湖区</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom container">
+      <p>Copyright © 2023 动维康 All Rights Reserved.</p>
+    </div>
+  </footer>
+</body>
+</html> 

@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>中医养生指导 - 动维康</title>
+  <link rel="stylesheet" href="../styles/index.css">
+  <style>
+    .meridian-tab {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 10px;
+      margin-bottom: 30px;
+    }
+    
+    .meridian-tab-item {
+      padding: 10px 20px;
+      border: 1px solid #ddd;
+      border-radius: var(--border-radius);
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .meridian-tab-item.active {
+      background-color: var(--primary-color);
+      color: var(--white);
+      border-color: var(--primary-color);
+    }
+    
+    .meridian-content {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 30px;
+    }
+    
+    .meridian-image {
+      background-color: var(--white);
+      padding: 20px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      height: fit-content;
+    }
+    
+    .meridian-image img {
+      width: 100%;
+      object-fit: contain;
+    }
+    
+    .acupoint-list {
+      background-color: var(--white);
+      padding: 20px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+    }
+    
+    .acupoint {
+      border-bottom: 1px solid #eee;
+      padding-bottom: 15px;
+      margin-bottom: 15px;
+    }
+    
+    .acupoint:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+    
+    .acupoint-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    
+    .acupoint-name {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--primary-color);
+    }
+    
+    .acupoint-location {
+      color: var(--light-text);
+    }
+    
+    .seasonal-care-card {
+      background-color: var(--white);
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      padding: 25px;
+      margin-bottom: 30px;
+    }
+    
+    .seasonal-care-header {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    
+    .seasonal-care-icon {
+      width: 50px;
+      height: 50px;
+    }
+    
+    .seasonal-care-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+    
+    .seasonal-care-subtitle {
+      font-size: 1.1rem;
+      color: var(--light-text);
+    }
+    
+    .seasonal-care-section {
+      margin-bottom: 20px;
+    }
+    
+    .seasonal-care-section h4 {
+      margin-bottom: 10px;
+      color: var(--primary-color);
+      font-size: 1.2rem;
+    }
+    
+    .recipe-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    
+    .recipe-card {
+      background-color: var(--white);
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      box-shadow: var(--box-shadow);
+    }
+    
+    .recipe-image {
+      height: 150px;
+      width: 100%;
+      object-fit: cover;
+    }
+    
+    .recipe-content {
+      padding: 15px;
+    }
+    
+    .recipe-title {
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+    }
+    
+    .recipe-ingredients {
+      color: var(--light-text);
+      margin-bottom: 10px;
+      font-size: 0.9rem;
+    }
+    
+    .exercise-video {
+      background-color: var(--white);
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      box-shadow: var(--box-shadow);
+      margin-bottom: 30px;
+    }
+    
+    .video-container {
+      position: relative;
+      padding-bottom: 56.25%; /* 16:9 比例 */
+    }
+    
+    .video-container img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .video-play-button {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 60px;
+      height: 60px;
+      background-color: rgba(0, 0, 0, 0.7);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .video-play-button:before {
+      content: "";
+      width: 0;
+      height: 0;
+      border-top: 10px solid transparent;
+      border-bottom: 10px solid transparent;
+      border-left: 15px solid white;
+      margin-left: 5px;
+    }
+    
+    .video-details {
+      padding: 20px;
+    }
+    
+    .video-title {
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+    }
+    
+    .video-description {
+      color: var(--light-text);
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body>
+  <!-- 页头 -->
+  <header class="header">
+    <div class="container navbar">
+      <div class="logo">
+        <img src="../assets/logo.png" alt="动维康">
+      </div>
+      <nav class="nav-links">
+        <a href="HomePage.html">首页</a>
+        <a href="#">产品中心</a>
+        <a href="#">解决方案</a>
+        <a href="#">长护险</a>
+        <a href="#">典型案例</a>
+        <a href="#">新闻动态</a>
+        <a href="#">资料下载</a>
+        <a href="#">关于我们</a>
+        <a href="#" class="btn btn-primary">免费试用</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- 主要内容 -->
+  <main>
+    <section class="blue-section">
+      <div class="container">
+        <h1>中医养生指导</h1>
+        <p>融合传统中医理念与现代健康理论，为您提供全面的养生指导</p>
+      </div>
+    </section>
+
+    <!-- 经络养生 -->
+    <section>
+      <div class="container" style="padding: 40px 0;">
+        <h2>经络养生</h2>
+        <p style="margin-bottom: 30px;">经络是气血运行的通道，通过按摩穴位、疏通经络，可促进气血运行，调节脏腑功能，增强体质</p>
+        
+        <div class="meridian-tab">
+          <div class="meridian-tab-item active">肺经</div>
+          <div class="meridian-tab-item">大肠经</div>
+          <div class="meridian-tab-item">胃经</div>
+          <div class="meridian-tab-item">脾经</div>
+          <div class="meridian-tab-item">心经</div>
+          <div class="meridian-tab-item">小肠经</div>
+          <div class="meridian-tab-item">膀胱经</div>
+          <div class="meridian-tab-item">肾经</div>
+          <div class="meridian-tab-item">心包经</div>
+          <div class="meridian-tab-item">三焦经</div>
+          <div class="meridian-tab-item">胆经</div>
+          <div class="meridian-tab-item">肝经</div>
+        </div>
+        
+        <div class="meridian-content">
+          <div class="meridian-image">
+            <img src="../assets/lung-meridian.png" alt="肺经图解">
+            <p style="text-align: center; margin-top: 15px; font-weight: 600;">手太阴肺经</p>
+            <p style="text-align: center; color: var(--light-text);">最佳保养时间: 3:00-5:00</p>
+          </div>
+          
+          <div class="acupoint-list">
+            <h3 style="margin-bottom: 20px;">重要穴位</h3>
+            
+            <div class="acupoint">
+              <div class="acupoint-header">
+                <span class="acupoint-name">中府穴</span>
+                <span class="acupoint-location">位于胸部，锁骨下缘外侧</span>
+              </div>
+              <p>功效: 宣肺解表，理气止咳，通调水道</p>
+              <p>按摩方法: 用拇指按揉穴位，每次1-3分钟，以局部有酸胀感为宜</p>
+            </div>
+            
+            <div class="acupoint">
+              <div class="acupoint-header">
+                <span class="acupoint-name">尺泽穴</span>
+                <span class="acupoint-location">位于肘横纹中，肱二头肌腱的桡侧凹陷处</span>
+              </div>
+              <p>功效: 清泄肺热，止咳平喘，通经活络</p>
+              <p>按摩方法: 用拇指点按穴位，力度适中，每次2-3分钟</p>
+            </div>
+            
+            <div class="acupoint">
+              <div class="acupoint-header">
+                <span class="acupoint-name">列缺穴</span>
+                <span class="acupoint-location">位于腕横纹上，桡骨茎突与桡侧腕伸肌腱之间</span>
+              </div>
+              <p>功效: 疏风解表，通经活络，利咽开音</p>
+              <p>按摩方法: 用对侧拇指按揉，以有酸麻感为度，每次按摩2-3分钟</p>
+            </div>
+            
+            <div class="acupoint">
+              <div class="acupoint-header">
+                <span class="acupoint-name">太渊穴</span>
+                <span class="acupoint-location">位于腕掌侧横纹桡侧，桡动脉搏动处</span>
+              </div>
+              <p>功效: 补肺益气，和胃降逆，调理气血</p>
+              <p>按摩方法: 用拇指按揉此穴，力度适中，每次1-2分钟</p>
+            </div>
+            
+            <div class="acupoint">
+              <div class="acupoint-header">
+                <span class="acupoint-name">少商穴</span>
+                <span class="acupoint-location">位于拇指桡侧，距指甲角0.1寸处</span>
+              </div>
+              <p>功效: 清肺热，利咽喉，醒神开窍</p>
+              <p>按摩方法: 用指腹轻揉按压，或点按刺激，每次30秒即可</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 节气养生 -->
+    <section style="background-color: #f1f8fe; padding: 40px 0;">
+      <div class="container">
+        <h2>节气养生</h2>
+        <p style="margin-bottom: 30px;">二十四节气是中国传统历法的重要组成部分，根据节气变化调整养生方式，可以顺应自然，保持健康</p>
+        
+        <div class="seasonal-care-card">
+          <div class="seasonal-care-header">
+            <img src="../assets/autumn-icon.png" alt="立秋" class="seasonal-care-icon">
+            <div>
+              <h3 class="seasonal-care-title">立秋养生</h3>
+              <p class="seasonal-care-subtitle">2023年08月07日 - 2023年08月22日</p>
+            </div>
+          </div>
+          
+          <div class="seasonal-care-section">
+            <h4>时令特点</h4>
+            <p>立秋是秋天的第一个节气，意味着暑去凉来，阳气开始收敛，阴气渐长。此时节气虽转秋，但仍处于"秋老虎"时期，天气仍然炎热。</p>
+          </div>
+          
+          <div class="seasonal-care-section">
+            <h4>起居调养</h4>
+            <ul>
+              <li>早睡早起，保持充足睡眠</li>
+              <li>午后适当休息，避免过度疲劳</li>
+              <li>注意防暑降温，避免出汗后受风</li>
+              <li>保持居室通风，但避免直吹风扇或空调</li>
+            </ul>
+          </div>
+          
+          <div class="seasonal-care-section">
+            <h4>饮食调养</h4>
+            <ul>
+              <li>清淡饮食，少食油腻、辛辣刺激食物</li>
+              <li>多食用时令蔬果，如莲藕、芝麻、花生、蜂蜜等</li>
+              <li>适当进食滋阴润燥的食物，如梨、百合、银耳等</li>
+              <li>保持充分饮水，可适当饮用绿茶、菊花茶</li>
+            </ul>
+          </div>
+          
+          <div class="seasonal-care-section">
+            <h4>推荐食疗</h4>
+            <div class="recipe-cards">
+              <div class="recipe-card">
+                <img src="../assets/recipe-1.jpg" alt="百合莲子羹" class="recipe-image">
+                <div class="recipe-content">
+                  <h5 class="recipe-title">百合莲子羹</h5>
+                  <p class="recipe-ingredients">原料：百合30克，莲子30克，冰糖适量</p>
+                  <p>功效：养阴润肺，健脾安神</p>
+                </div>
+              </div>
+              
+              <div class="recipe-card">
+                <img src="../assets/recipe-2.jpg" alt="银耳雪梨汤" class="recipe-image">
+                <div class="recipe-content">
+                  <h5 class="recipe-title">银耳雪梨汤</h5>
+                  <p class="recipe-ingredients">原料：银耳15克，雪梨1个，冰糖适量</p>
+                  <p>功效：润肺生津，清热化痰</p>
+                </div>
+              </div>
+              
+              <div class="recipe-card">
+                <img src="../assets/recipe-3.jpg" alt="莲藕排骨汤" class="recipe-image">
+                <div class="recipe-content">
+                  <h5 class="recipe-title">莲藕排骨汤</h5>
+                  <p class="recipe-ingredients">原料：莲藕300克，排骨500克，姜片适量</p>
+                  <p>功效：健脾养胃，滋阴润燥</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 传统运动 -->
+    <section>
+      <div class="container" style="padding: 40px 0;">
+        <h2>传统养生运动</h2>
+        <p style="margin-bottom: 30px;">中国传统养生运动融合了导引、吐纳等技术，动静结合，内外兼修，有助于增强体质，预防疾病</p>
+        
+        <div class="exercise-video">
+          <div class="video-container">
+            <img src="../assets/taichi-cover.jpg" alt="太极拳教学视频">
+            <div class="video-play-button"></div>
+          </div>
+          <div class="video-details">
+            <h3 class="video-title">简化24式太极拳教学（一）</h3>
+            <p class="video-description">太极拳是一种内外兼修的中国传统拳术，具有强身健体、延年益寿的功效。本视频讲解简化24式太极拳的前8个动作。</p>
+            <p><strong>适合人群：</strong>老年人、中年人，尤其适合关节不适、高血压患者</p>
+            <p><strong>运动强度：</strong>低强度，每日练习15-30分钟</p>
+            <p><strong>健康功效：</strong>增强心肺功能，改善平衡能力，缓解关节疼痛，稳定血压</p>
+          </div>
+        </div>
+        
+        <div class="exercise-video">
+          <div class="video-container">
+            <img src="../assets/baduanjin-cover.jpg" alt="八段锦教学视频">
+            <div class="video-play-button"></div>
+          </div>
+          <div class="video-details">
+            <h3 class="video-title">八段锦完整教学（口令版）</h3>
+            <p class="video-description">八段锦是中国传统的健身气功，由八个动作组成，简单易学，适合各年龄段人群。本视频提供完整的口令指导。</p>
+            <p><strong>适合人群：</strong>各年龄段人群，尤其适合初学者</p>
+            <p><strong>运动强度：</strong>低至中等强度，每日练习10-20分钟</p>
+            <p><strong>健康功效：</strong>舒展筋骨，增强脏腑功能，调节气血，提高免疫力</p>
+          </div>
+        </div>
+        
+        <div class="exercise-video">
+          <div class="video-container">
+            <img src="../assets/wuqinxi-cover.jpg" alt="五禽戏教学视频">
+            <div class="video-play-button"></div>
+          </div>
+          <div class="video-details">
+            <h3 class="video-title">五禽戏养生功法详解</h3>
+            <p class="video-description">五禽戏是模仿虎、鹿、熊、猿、鸟五种动物动作的健身方法，由东汉名医华佗创编。本视频详细讲解每种动物的模仿要领。</p>
+            <p><strong>适合人群：</strong>中老年人，关节灵活者</p>
+            <p><strong>运动强度：</strong>中等强度，每日练习15-30分钟</p>
+            <p><strong>健康功效：</strong>疏通经络，活动关节，强健脏腑，延缓衰老</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 一站式服务 -->
+    <section class="blue-section cta-section">
+      <div class="container">
+        <h2>个性化中医养生方案</h2>
+        <p>结合您的体质特点，为您定制专属养生方案</p>
+        <a href="#" class="btn btn-secondary">在线咨询</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- 页脚 -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <div class="footer-links">
+        <h4>产品中心</h4>
+        <ul>
+          <li><a href="#">CCRC养老运营管理系统</a></li>
+          <li><a href="#">机构养老运营管理系统</a></li>
+          <li><a href="#">社区居家养老管理系统</a></li>
+          <li><a href="#">民政智慧养老平台</a></li>
+          <li><a href="#">健康数据监测与管理</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>解决方案</h4>
+        <ul>
+          <li><a href="#">机构养老解决方案</a></li>
+          <li><a href="#">居家养老解决方案</a></li>
+          <li><a href="#">社区养老解决方案</a></li>
+          <li><a href="#">医养结合解决方案</a></li>
+          <li><a href="#">农村养老解决方案</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>关于我们</h4>
+        <ul>
+          <li><a href="#">公司介绍</a></li>
+          <li><a href="#">企业文化</a></li>
+          <li><a href="#">发展历程</a></li>
+          <li><a href="#">合作伙伴</a></li>
+          <li><a href="#">联系我们</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>新闻资讯</h4>
+        <ul>
+          <li><a href="#">公司新闻</a></li>
+          <li><a href="#">行业资讯</a></li>
+          <li><a href="#">政策法规</a></li>
+          <li><a href="#">常见问题</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>联系我们</h4>
+        <ul>
+          <li>电话：0571-87899385</li>
+          <li>邮箱：info@example.com</li>
+          <li>地址：浙江省杭州市西湖区</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom container">
+      <p>Copyright © 2023 动维康 All Rights Reserved.</p>
+    </div>
+  </footer>
+</body>
+</html> 

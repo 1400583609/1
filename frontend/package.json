@@ -1,51 +1,24 @@
 {
-  "name": "dongweikang-frontend",
+  "name": "dongweikang-health",
   "version": "1.0.0",
-  "description": "动维康老年人健康管理平台前端",
-  "private": true,
+  "description": "动维康 - 老年人健康管理平台",
+  "main": "index.js",
+  "scripts": {
+    "dev": "http-server ./src -p 3000",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "健康管理",
+    "老年人",
+    "中医养生",
+    "健康数据"
+  ],
+  "author": "",
+  "license": "ISC",
   "dependencies": {
-    "@ant-design/charts": "^1.4.2",
-    "@ant-design/icons": "^4.8.0",
-    "@ant-design/plots": "^1.2.5",
-    "ajv": "^8.12.0",
-    "antd": "^5.6.0",
-    "axios": "^1.4.0",
-    "moment": "^2.29.4",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-router-dom": "^6.12.1",
-    "web-vitals": "^3.3.2"
+    "chart.js": "^4.3.0"
   },
   "devDependencies": {
-    "@types/node": "^18.16.18",
-    "@types/react": "^18.2.11",
-    "@types/react-dom": "^18.2.4",
-    "react-scripts": "5.0.1",
-    "sass": "^1.63.3",
-    "typescript": "^4.9.5"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "http-server": "^14.1.1"
   }
-}
+} 
