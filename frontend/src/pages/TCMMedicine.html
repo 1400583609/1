@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>中医养生指导 - 动维康</title>
   <link rel="stylesheet" href="../styles/index.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
+  <link rel="shortcut icon" href="../assets/favicon.ico" type="image/x-icon">
   <style>
     .meridian-tab {
       display: flex;
@@ -219,25 +223,35 @@
   </style>
 </head>
 <body>
-  <!-- 页头 -->
-  <header class="header">
-    <div class="container navbar">
-      <div class="logo">
-        <img src="../assets/logo.png" alt="动维康">
+  <!-- 预加载动画 -->
+  <div class="preloader">
+    <div class="loader-container">
+      <div class="pulse-container">
+        <div class="pulse-bubble pulse-bubble-1"></div>
+        <div class="pulse-bubble pulse-bubble-2"></div>
+        <div class="pulse-bubble pulse-bubble-3"></div>
       </div>
-      <nav class="nav-links">
-        <a href="HomePage.html">首页</a>
-        <a href="#">产品中心</a>
-        <a href="#">解决方案</a>
-        <a href="#">长护险</a>
-        <a href="#">典型案例</a>
-        <a href="#">新闻动态</a>
-        <a href="#">资料下载</a>
-        <a href="#">关于我们</a>
-        <a href="#" class="btn btn-primary">免费试用</a>
-      </nav>
+      <div class="logo-container">
+        <svg class="heart-rate" viewBox="0 0 400 120">
+          <path class="heart-rate-path" d="M0,60 L20,60 L40,40 L60,80 L80,20 L100,80 L120,60 L140,100 L160,0 L180,60 L200,40 L220,80 L240,60 L260,40 L280,80 L300,20 L320,60 L340,40 L360,80 L380,60 L400,60" />
+        </svg>
+      </div>
+      <div class="loader-text">
+        <span>动</span>
+        <span>维</span>
+        <span>康</span>
+        <span class="motto">健康智慧&nbsp;乐享生活</span>
+      </div>
     </div>
-  </header>
+  </div>
+
+  <!-- 滚动指示器 -->
+  <div class="scroll-indicator-container">
+    <div class="scroll-indicator-progress"></div>
+  </div>
+  
+  <!-- 页头容器，将通过JS动态加载Header组件 -->
+  <div id="header-container"></div>
 
   <!-- 主要内容 -->
   <main>
@@ -463,60 +477,10 @@
     </section>
   </main>
 
-  <!-- 页脚 -->
-  <footer class="footer">
-    <div class="container footer-content">
-      <div class="footer-links">
-        <h4>产品中心</h4>
-        <ul>
-          <li><a href="#">CCRC养老运营管理系统</a></li>
-          <li><a href="#">机构养老运营管理系统</a></li>
-          <li><a href="#">社区居家养老管理系统</a></li>
-          <li><a href="#">民政智慧养老平台</a></li>
-          <li><a href="#">健康数据监测与管理</a></li>
-        </ul>
-      </div>
-      <div class="footer-links">
-        <h4>解决方案</h4>
-        <ul>
-          <li><a href="#">机构养老解决方案</a></li>
-          <li><a href="#">居家养老解决方案</a></li>
-          <li><a href="#">社区养老解决方案</a></li>
-          <li><a href="#">医养结合解决方案</a></li>
-          <li><a href="#">农村养老解决方案</a></li>
-        </ul>
-      </div>
-      <div class="footer-links">
-        <h4>关于我们</h4>
-        <ul>
-          <li><a href="#">公司介绍</a></li>
-          <li><a href="#">企业文化</a></li>
-          <li><a href="#">发展历程</a></li>
-          <li><a href="#">合作伙伴</a></li>
-          <li><a href="#">联系我们</a></li>
-        </ul>
-      </div>
-      <div class="footer-links">
-        <h4>新闻资讯</h4>
-        <ul>
-          <li><a href="#">公司新闻</a></li>
-          <li><a href="#">行业资讯</a></li>
-          <li><a href="#">政策法规</a></li>
-          <li><a href="#">常见问题</a></li>
-        </ul>
-      </div>
-      <div class="footer-links">
-        <h4>联系我们</h4>
-        <ul>
-          <li>电话：0571-87899385</li>
-          <li>邮箱：info@example.com</li>
-          <li>地址：浙江省杭州市西湖区</li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom container">
-      <p>Copyright © 2023 动维康 All Rights Reserved.</p>
-    </div>
-  </footer>
+  <!-- 页脚容器，将通过JS动态加载Footer组件 -->
+  <div id="footer-container"></div>
+  
+  <!-- 加载主JS文件 -->
+  <script type="module" src="../index.js"></script>
 </body>
 </html> 

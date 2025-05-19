@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 30" width="80" height="30">
+  <rect width="80" height="30" rx="4" fill="#f5f5f5"/>
+  <text x="32" y="20" font-family="Arial, sans-serif" font-size="12" fill="#333">可信站点</text>
+  <path d="M18,7 L18,23 L15,23 L15,7 L18,7 Z M21,10 L24,10 L24,13 L21,13 L21,10 Z M21,17 L24,17 L24,20 L21,20 L21,17 Z" fill="#0077cc"/>
+  <circle cx="20" cy="15" r="10" fill="none" stroke="#0077cc" stroke-width="1.5"/>
+</svg> 

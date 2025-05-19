@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>传统中医养生 - 动维康</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #3084C0;
+      --secondary-color: #6EB1E8;
+      --light-blue: #EBF5FC;
+      --dark-blue: #1E5885;
+      --white: #ffffff;
+      --tcm-orange: #E67E22;
+      --tcm-light: #FFF3E0;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      background-color: var(--tcm-light);
+      color: #333;
+      line-height: 1.6;
+    }
+    
+    .header {
+      background-color: var(--white);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+    }
+    
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 12px 20px;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+    
+    .logo-text {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--primary-color);
+    }
+    
+    .nav-menu {
+      display: flex;
+      align-items: center;
+    }
+    
+    .nav-item {
+      margin: 0 15px;
+      color: #333;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 500;
+      position: relative;
+      transition: color 0.3s;
+    }
+    
+    .nav-item:hover {
+      color: var(--primary-color);
+    }
+    
+    .nav-item.active {
+      color: var(--primary-color);
+    }
+    
+    .nav-item.active::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background-color: var(--primary-color);
+      border-radius: 2px;
+    }
+    
+    .main-content {
+      max-width: 1200px;
+      margin: 80px auto 40px;
+      padding: 20px;
+    }
+    
+    .page-title {
+      text-align: center;
+      margin-bottom: 20px;
+      position: relative;
+    }
+    
+    .page-title h1 {
+      font-size: 2.5rem;
+      color: #333;
+      display: inline-block;
+    }
+    
+    .page-title h1 span {
+      color: var(--tcm-orange);
+      position: relative;
+    }
+    
+    .page-title h1 span::after {
+      content: '';
+      display: block;
+      width: 100%;
+      height: 4px;
+      background: var(--tcm-orange);
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+    }
+    
+    .intro-section {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      margin: 50px 0;
+      align-items: center;
+    }
+    
+    .intro-text {
+      flex: 1 1 60%;
+      padding: 30px;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+    
+    .intro-title {
+      font-size: 24px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 20px;
+    }
+    
+    .intro-description {
+      font-size: 16px;
+      color: #666;
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+    
+    .intro-image {
+      flex: 1 1 30%;
+      height: 300px;
+      background: url('https://via.placeholder.com/400x300') no-repeat center center;
+      background-size: cover;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .tcm-cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      justify-content: center;
+      margin: 50px 0;
+    }
+    
+    .tcm-card {
+      flex: 0 1 calc(33% - 30px);
+      min-width: 250px;
+      background: white;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    
+    .tcm-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    }
+    
+    .tcm-icon {
+      width: 100%;
+      height: 140px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--light-blue);
+    }
+    
+    .tcm-icon svg {
+      width: 70px;
+      height: 70px;
+      fill: var(--tcm-orange);
+    }
+    
+    .tcm-content {
+      padding: 20px;
+    }
+    
+    .tcm-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+    
+    .tcm-description {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 15px;
+      line-height: 1.6;
+    }
+    
+    .tcm-cta {
+      display: block;
+      padding: 10px 15px;
+      background: var(--light-blue);
+      color: var(--primary-color);
+      border: none;
+      border-radius: 5px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s;
+      text-align: center;
+      margin-top: 15px;
+    }
+    
+    .tcm-cta:hover {
+      background: var(--tcm-orange);
+      color: white;
+    }
+    
+    .call-to-action {
+      padding: 40px;
+      background: white;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      margin-top: 50px;
+    }
+    
+    .cta-title {
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--tcm-orange);
+      margin-bottom: 20px;
+    }
+    
+    .tcm-knowledge {
+      width: 250px;
+      height: 250px;
+      background: var(--tcm-light);
+      border-radius: 15px;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 20px auto;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+    
+    .tcm-knowledge-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--tcm-orange);
+      text-align: center;
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-container">
+      <div class="logo">
+        <div class="logo-text">动维康</div>
+      </div>
+      <nav class="nav-menu">
+        <a href="SimpleHome.html" class="nav-item">首页</a>
+        <a href="HealthMonitor.html" class="nav-item">健康看板</a>
+        <a href="ExercisePlan.html" class="nav-item">运动处方</a>
+        <a href="TCMWellness.html" class="nav-item active">中医养生</a>
+        <a href="AIDoctor.html" class="nav-item">智能问诊</a>
+        <a href="#" class="nav-item">更多</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="page-title">
+      <h1>传统<span>中医养生</span></h1>
+    </div>
+
+    <div class="intro-section">
+      <div class="intro-text">
+        <h2 class="intro-title">古老智慧，现代应用</h2>
+        <p class="intro-description">结合传统中医理念与现代健康理念，为您提供全面的养生指导。通过经络养生、节气调养和传统功法练习，达到阴阳平衡，强健身心。</p>
+      </div>
+      <div class="tcm-knowledge">
+        <h3 class="tcm-knowledge-title">中医养生</h3>
+      </div>
+    </div>
+
+    <div class="tcm-cards">
+      <div class="tcm-card">
+        <div class="tcm-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/>
+          </svg>
+        </div>
+        <div class="tcm-content">
+          <h3 class="tcm-title">经络养生</h3>
+          <p class="tcm-description">详解人体十二经络系统，介绍重要穴位的按摩方法及功效，帮助疏通经络，增强气血运行，改善身体健康状况。</p>
+          <a href="#" class="tcm-cta">了解更多</a>
+        </div>
+      </div>
+      
+      <div class="tcm-card">
+        <div class="tcm-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M19.03 3.56c-1.67-1.39-3.74-2.3-6.03-2.51v2.01c1.73.19 3.31.88 4.61 1.92l1.42-1.42zM11 3.06V1.05c-2.29.2-4.36 1.12-6.03 2.51l1.42 1.42C7.69 3.94 9.27 3.25 11 3.06zM4.98 6.39l-1.42-1.42C2.17 6.63 1.26 8.7 1.05 11h2.01c.19-1.73.88-3.31 1.92-4.61zM20.94 11h2.01c-.21-2.29-1.12-4.36-2.51-6.03l-1.42 1.42c1.04 1.3 1.73 2.88 1.92 4.61zM7 12l3.44 1.56L12 17l1.56-3.44L17 12l-3.44-1.56L12 7l-1.56 3.44z"/>
+          </svg>
+        </div>
+        <div class="tcm-content">
+          <h3 class="tcm-title">节气养生</h3>
+          <p class="tcm-description">依据二十四节气的变化规律，提供对应时节的养生饮食建议、起居调理方案，帮助您顺应自然，调养身体。</p>
+          <a href="#" class="tcm-cta">了解更多</a>
+        </div>
+      </div>
+      
+      <div class="tcm-card">
+        <div class="tcm-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M13.5.67s.74 2.65.74 4.8c0 2.06-1.35 3.73-3.41 3.73-2.07 0-3.63-1.67-3.63-3.73l.03-.36C5.21 7.51 4 10.62 4 14c0 4.42 3.58 8 8 8s8-3.58 8-8C20 8.61 17.41 3.8 13.5.67zM11.71 19c-1.78 0-3.22-1.4-3.22-3.14 0-1.62 1.05-2.76 2.81-3.12 1.77-.36 3.6-1.21 4.62-2.58.39 1.29.59 2.65.59 4.04 0 2.65-2.15 4.8-4.8 4.8z"/>
+          </svg>
+        </div>
+        <div class="tcm-content">
+          <h3 class="tcm-title">传统运动</h3>
+          <p class="tcm-description">提供太极拳、八段锦、五禽戏等传统健身功法的详细教学，帮助您通过柔和的动作锻炼身体，提高身体协调性和灵活性。</p>
+          <a href="#" class="tcm-cta">了解更多</a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="call-to-action">
+      <h2 class="cta-title">探索中医养生的智慧</h2>
+      <p style="margin-bottom: 20px;">立即开始您的中医养生之旅，体验传统智慧带来的健康益处</p>
+      <a href="#" class="tcm-cta" style="display: inline-block; background: var(--tcm-orange); color: white; padding: 12px 25px;">开始中医养生</a>
+    </div>
+  </main>
+
+  <script>
+    // 添加动画效果
+    document.addEventListener('DOMContentLoaded', function() {
+      const introSection = document.querySelector('.intro-section');
+      const tcmCards = document.querySelectorAll('.tcm-card');
+      const callToAction = document.querySelector('.call-to-action');
+      
+      // 初始设置元素不可见
+      introSection.style.opacity = '0';
+      introSection.style.transform = 'translateY(30px)';
+      introSection.style.transition = 'opacity 0.8s ease-out, transform 0.8s ease-out';
+      
+      tcmCards.forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(30px)';
+        card.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+        card.style.transitionDelay = `${0.2 + index * 0.15}s`;
+      });
+      
+      callToAction.style.opacity = '0';
+      callToAction.style.transform = 'translateY(30px)';
+      callToAction.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+      callToAction.style.transitionDelay = '0.6s';
+      
+      // 创建观察器监听元素出现在视口
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            // 元素出现在视口中，添加显示动画
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+            
+            // 元素已经显示，不再需要观察
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 }); // 当10%的元素可见时触发
+      
+      // 观察所有元素
+      observer.observe(introSection);
+      tcmCards.forEach(card => {
+        observer.observe(card);
+      });
+      observer.observe(callToAction);
+    });
+  </script>
+</body>
+</html> 

@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI医生智能问诊 - 动维康</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #3084C0;
+      --secondary-color: #6EB1E8;
+      --light-blue: #EBF5FC;
+      --dark-blue: #1E5885;
+      --white: #ffffff;
+      --ai-blue: #3498db;
+      --ai-light: #e3f2fd;
+      --footer-bg: #2c3e50;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      background-color: var(--ai-light);
+      color: #333;
+      line-height: 1.6;
+    }
+    
+    .header {
+      background-color: var(--white);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+    }
+    
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 12px 20px;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+    
+    .logo-text {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--primary-color);
+    }
+    
+    .nav-menu {
+      display: flex;
+      align-items: center;
+    }
+    
+    .nav-item {
+      margin: 0 15px;
+      color: #333;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 500;
+      position: relative;
+      transition: color 0.3s;
+    }
+    
+    .nav-item:hover {
+      color: var(--primary-color);
+    }
+    
+    .nav-item.active {
+      color: var(--primary-color);
+    }
+    
+    .nav-item.active::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background-color: var(--primary-color);
+      border-radius: 2px;
+    }
+    
+    .main-content {
+      max-width: 1200px;
+      margin: 80px auto 40px;
+      padding: 20px;
+    }
+    
+    .page-title {
+      text-align: center;
+      margin-bottom: 50px;
+      position: relative;
+    }
+    
+    .page-title h1 {
+      font-size: 2.5rem;
+      color: #333;
+      display: inline-block;
+    }
+    
+    .page-title h1 span {
+      color: var(--ai-blue);
+      position: relative;
+    }
+    
+    .page-title h1 span::after {
+      content: '';
+      display: block;
+      width: 100%;
+      height: 4px;
+      background: var(--ai-blue);
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+    }
+    
+    .ai-doctor-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+    
+    .chat-container {
+      flex: 1 1 60%;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      height: 500px;
+    }
+    
+    .chat-header {
+      background: var(--ai-blue);
+      color: white;
+      padding: 15px;
+      font-size: 18px;
+      font-weight: 500;
+    }
+    
+    .chat-messages {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+    }
+    
+    .message {
+      margin-bottom: 20px;
+      max-width: 80%;
+    }
+    
+    .message-user {
+      margin-left: auto;
+      background: var(--light-blue);
+      padding: 12px 15px;
+      border-radius: 15px 15px 0 15px;
+    }
+    
+    .message-ai {
+      margin-right: auto;
+      background: #f1f1f1;
+      padding: 12px 15px;
+      border-radius: 15px 15px 15px 0;
+    }
+    
+    .chat-input {
+      border-top: 1px solid #eee;
+      padding: 15px;
+      display: flex;
+    }
+    
+    .chat-input input {
+      flex: 1;
+      padding: 10px 15px;
+      border: 1px solid #ddd;
+      border-radius: 20px;
+      margin-right: 10px;
+      font-size: 14px;
+    }
+    
+    .chat-input button {
+      padding: 10px 20px;
+      background: var(--ai-blue);
+      color: white;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .chat-input button:hover {
+      background: var(--dark-blue);
+    }
+    
+    .ai-features {
+      flex: 1 1 30%;
+      background: white;
+      border-radius: 15px;
+      padding: 25px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+    
+    .ai-feature-title {
+      font-size: 22px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 20px;
+    }
+    
+    .ai-feature-subtitle {
+      font-size: 16px;
+      color: #666;
+      margin-bottom: 25px;
+      line-height: 1.6;
+    }
+    
+    .feature-list {
+      list-style: none;
+    }
+    
+    .feature-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 20px;
+    }
+    
+    .feature-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--ai-blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 15px;
+      flex-shrink: 0;
+    }
+    
+    .feature-icon svg {
+      width: 14px;
+      height: 14px;
+      fill: white;
+    }
+    
+    .feature-text {
+      font-size: 14px;
+      color: #666;
+    }
+    
+    .ai-help-btn {
+      display: block;
+      width: 100%;
+      padding: 12px 0;
+      background: var(--ai-blue);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s;
+      margin-top: 30px;
+    }
+    
+    .ai-help-btn:hover {
+      background: var(--dark-blue);
+      transform: translateY(-2px);
+    }
+    
+    .page-footer {
+      background: var(--footer-bg);
+      color: white;
+      padding: 40px 0;
+      margin-top: 80px;
+    }
+    
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+    
+    .footer-column {
+      flex: 1 1 200px;
+      margin-bottom: 30px;
+    }
+    
+    .footer-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+    
+    .footer-links {
+      list-style: none;
+    }
+    
+    .footer-links li {
+      margin-bottom: 10px;
+    }
+    
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      transition: color 0.3s;
+      font-size: 14px;
+    }
+    
+    .footer-links a:hover {
+      color: white;
+    }
+    
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 20px;
+      margin-top: 20px;
+      text-align: center;
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.5);
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-container">
+      <div class="logo">
+        <div class="logo-text">动维康</div>
+      </div>
+      <nav class="nav-menu">
+        <a href="SimpleHome.html" class="nav-item">首页</a>
+        <a href="HealthMonitor.html" class="nav-item">健康看板</a>
+        <a href="ExercisePlan.html" class="nav-item">运动处方</a>
+        <a href="TCMWellness.html" class="nav-item">中医养生</a>
+        <a href="AIDoctor.html" class="nav-item active">智能问诊</a>
+        <a href="#" class="nav-item">更多</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="page-title">
+      <h1>AI医生<span>智能问诊</span></h1>
+    </div>
+
+    <div class="ai-doctor-container">
+      <div class="chat-container">
+        <div class="chat-header">
+          动维康AI医生
+        </div>
+        <div class="chat-messages">
+          <div class="message message-ai">
+            您好，我是动维康AI医生。我能为您解答健康问题，提供初步健康咨询。请问有什么可以帮到您的？
+          </div>
+          <div class="message message-user">
+            您好，我最近总是感到头晕目眩，这是怎么回事？
+          </div>
+          <div class="message message-ai">
+            头晕目眩可能由多种原因引起，例如疲劳、贫血、低血压、前庭功能障碍、颈椎问题等。为了给您提供更准确的建议，请问：<br><br>
+            1. 头晕持续多久了？<br>
+            2. 有伴随其他症状吗？如耳鸣、恶心呕吐等<br>
+            3. 最近有熬夜或情绪紧张的情况吗？<br>
+            4. 有测量过血压吗？
+          </div>
+        </div>
+        <div class="chat-input">
+          <input type="text" placeholder="请输入您的问题..." />
+          <button>发送</button>
+        </div>
+      </div>
+      
+      <div class="ai-features">
+        <h2 class="ai-feature-title">随时随地，智能答疑</h2>
+        <p class="ai-feature-subtitle">基于先进AI技术的智能问诊系统，解答您的健康疑问，提供初步健康建议。</p>
+        
+        <ul class="feature-list">
+          <li class="feature-item">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+              </svg>
+            </div>
+            <div class="feature-text">精准的症状分析，提供可能的健康建议</div>
+          </li>
+          <li class="feature-item">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+              </svg>
+            </div>
+            <div class="feature-text">支持图片识别功能，辅助判断外部症状</div>
+          </li>
+          <li class="feature-item">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+              </svg>
+            </div>
+            <div class="feature-text">健康知识库，帮助老年人了解常见病症</div>
+          </li>
+        </ul>
+        
+        <a href="#" class="ai-help-btn">立即咨询</a>
+      </div>
+    </div>
+  </main>
+  
+  <footer class="page-footer">
+    <div class="footer-container">
+      <div class="footer-column">
+        <h3 class="footer-title">关于我们</h3>
+        <ul class="footer-links">
+          <li><a href="#">平台介绍</a></li>
+          <li><a href="#">团队介绍</a></li>
+          <li><a href="#">联系我们</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-column">
+        <h3 class="footer-title">快速链接</h3>
+        <ul class="footer-links">
+          <li><a href="#">健康指南</a></li>
+          <li><a href="#">常见问题</a></li>
+          <li><a href="#">使用帮助</a></li>
+          <li><a href="#">隐私政策</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-column">
+        <h3 class="footer-title">服务方式</h3>
+        <ul class="footer-links">
+          <li><a href="#">线上咨询</a></li>
+          <li><a href="#">电话咨询</a></li>
+          <li><a href="#">预约上门服务</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-column">
+        <h3 class="footer-title">联系我们</h3>
+        <ul class="footer-links">
+          <li><a href="#">地址：广州市番禺区迎宾路123号</a></li>
+          <li><a href="#">电话：020-12345678</a></li>
+          <li><a href="#">邮箱：contact@dongweikang.com</a></li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      © 2025 动维康健康科技有限公司 版权所有 | 粤ICP备12345678号
+    </div>
+  </footer>
+
+  <script>
+    // 添加动画效果
+    document.addEventListener('DOMContentLoaded', function() {
+      const chatContainer = document.querySelector('.chat-container');
+      const aiFeatures = document.querySelector('.ai-features');
+      
+      // 初始设置元素不可见
+      chatContainer.style.opacity = '0';
+      chatContainer.style.transform = 'translateY(30px)';
+      chatContainer.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+      
+      aiFeatures.style.opacity = '0';
+      aiFeatures.style.transform = 'translateY(30px)';
+      aiFeatures.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+      aiFeatures.style.transitionDelay = '0.3s';
+      
+      // 创建观察器监听元素出现在视口
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            // 元素出现在视口中，添加显示动画
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+            
+            // 元素已经显示，不再需要观察
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 }); // 当10%的元素可见时触发
+      
+      // 观察所有元素
+      observer.observe(chatContainer);
+      observer.observe(aiFeatures);
+      
+      // 简单聊天功能
+      const chatInput = document.querySelector('.chat-input input');
+      const chatButton = document.querySelector('.chat-input button');
+      const chatMessages = document.querySelector('.chat-messages');
+      
+      chatButton.addEventListener('click', sendMessage);
+      chatInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          sendMessage();
+        }
+      });
+      
+      function sendMessage() {
+        const message = chatInput.value.trim();
+        if (message) {
+          // 添加用户消息
+          const userMessageDiv = document.createElement('div');
+          userMessageDiv.className = 'message message-user';
+          userMessageDiv.textContent = message;
+          chatMessages.appendChild(userMessageDiv);
+          
+          // 清空输入框
+          chatInput.value = '';
+          
+          // 滚动到底部
+          chatMessages.scrollTop = chatMessages.scrollHeight;
+          
+          // 模拟AI回复
+          setTimeout(() => {
+            const aiMessageDiv = document.createElement('div');
+            aiMessageDiv.className = 'message message-ai';
+            aiMessageDiv.textContent = getAIResponse(message);
+            chatMessages.appendChild(aiMessageDiv);
+            
+            // 滚动到底部
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+          }, 1000);
+        }
+      }
+      
+      function getAIResponse(message) {
+        // 简单的回复逻辑
+        const responses = [
+          "感谢您的提问。根据您提供的信息，建议您注意休息，保持规律作息。如症状持续，请及时就医。",
+          "您好，这可能是由多种原因引起的。建议您记录下症状出现的频率和具体情况，有助于医生进行诊断。",
+          "我理解您的担忧。这些症状在老年人中较为常见，可能与生活习惯有关。建议您保持良好的作息和饮食习惯。",
+          "根据您描述的情况，建议您多补充水分，适当增加锻炼。如果问题持续，请咨询专业医生。",
+          "您的健康状况需要进一步了解。建议您测量一下血压，并记录症状出现的具体时间，以便提供更准确的建议。"
+        ];
+        
+        return responses[Math.floor(Math.random() * responses.length)];
+      }
+    });
+  </script>
+</body>
+</html> 
